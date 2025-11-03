@@ -106,14 +106,13 @@ export async function updateInvoice(id: string, formData: FormData) {
   redirect(`/dashboard/invoices?query=${date}`);
 }
 
-export async function deleteInvoice(id: string) {
+export async function deleteInvoice(id: string): Promise<void> {
   try {
     await sql`
       DELETE FROM invoices WHERE id = ${id}
     `;
   } catch (error) {
     console.log(error);
-    return { message: "Database error: Failed to Delete Invoice." };
   }
 
   revalidatePath("dashboard/invoices");
